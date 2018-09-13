@@ -411,3 +411,4 @@ ASALocalRun/
 
 
 # End of https://www.gitignore.io/api/osx,linux,windows,visualstudio,visualstudiocode
+/weather.station.server/weather.station.server/appsettings.Development.json

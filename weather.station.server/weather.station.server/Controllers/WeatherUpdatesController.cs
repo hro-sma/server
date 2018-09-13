@@ -20,6 +20,7 @@ namespace weather.station.server.Controllers
         }
 
         // GET: api/WeatherUpdates
+        //Gets all updates from the database
         [HttpGet]
         public IEnumerable<WeatherUpdate> GetWeatherUpdate()
         {
@@ -27,6 +28,7 @@ namespace weather.station.server.Controllers
         }
 
         // GET: api/WeatherUpdates/5
+        // Gets a specific entry from the database
         [HttpGet("{id}")]
         public async Task<IActionResult> GetWeatherUpdate([FromRoute] Guid id)
         {
@@ -45,15 +47,26 @@ namespace weather.station.server.Controllers
             return Ok(weatherUpdate);
         }
 
-        //[HttpGet]
-        //[Route("migrate")]
-        //public async Task<IActionResult> GetMigrate()
-        //{
-        //    await _context.Database.EnsureDeletedAsync();
-        //    await _context.Database.MigrateAsync();
-        //    return Ok();
-        //}
+        // POST: api/WeatherUpdates
+        // Adds an update to the database
+        [HttpPost]
+        public async Task<IActionResult> PostWeatherUpdate([FromBody] WeatherUpdate weatherUpdate)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            weatherUpdate.TimeStamp = DateTime.UtcNow;
+            weatherUpdate.WeatherUpdateId = Guid.NewGuid();
+
+            _context.WeatherUpdate.Add(weatherUpdate);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetWeatherUpdate", new { id = weatherUpdate.WeatherUpdateId }, weatherUpdate);
+        }
+
+        #region futurereference
         //// PUT: api/WeatherUpdates/5
         //[HttpPut("{id}")]
         //public async Task<IActionResult> PutWeatherUpdate([FromRoute] Guid id, [FromBody] WeatherUpdate weatherUpdate)
@@ -89,23 +102,6 @@ namespace weather.station.server.Controllers
         //    return NoContent();
         //}
 
-        // POST: api/WeatherUpdates
-        [HttpPost]
-        public async Task<IActionResult> PostWeatherUpdate([FromBody] WeatherUpdate weatherUpdate)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            weatherUpdate.TimeStamp = DateTime.UtcNow;
-            weatherUpdate.WeatherUpdateId = Guid.NewGuid();
-
-            _context.WeatherUpdate.Add(weatherUpdate);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetWeatherUpdate", new { id = weatherUpdate.WeatherUpdateId }, weatherUpdate);
-        }
 
         //// DELETE: api/WeatherUpdates/5
         //[HttpDelete("{id}")]
@@ -128,9 +124,10 @@ namespace weather.station.server.Controllers
         //    return Ok(weatherUpdate);
         //}
 
-        private bool WeatherUpdateExists(Guid id)
-        {
-            return _context.WeatherUpdate.Any(e => e.WeatherUpdateId == id);
-        }
+        //private bool WeatherUpdateExists(Guid id)
+        //{
+        //    return _context.WeatherUpdate.Any(e => e.WeatherUpdateId == id);
+        //}
+        #endregion
     }
 }

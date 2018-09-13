@@ -16,6 +16,8 @@ namespace weather.station.server
 {
     public class Startup
     {
+        //SETTING THIS TO FALSE WILL ALLOW ACCESS TO THE PRODUCTION DATABASE
+        private const bool UseDevelopmentDatabase = true;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -24,12 +26,21 @@ namespace weather.station.server
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IHostingEnvironment env)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            string connectionString;
+            if (env.IsDevelopment() && UseDevelopmentDatabase)
+            {
+                connectionString = Configuration.GetConnectionString("weatherstationserverLocalContext");
+            }
+            else
+            {
+                connectionString = Configuration.GetConnectionString("weatherstationserverContext");
+            }
             services.AddDbContext<weatherstationserverContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("weatherstationserverContext")));
+                    options.UseSqlServer(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

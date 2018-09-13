@@ -1,1 +1,1 @@
-# server
+# Weather station server for Smart Things minor

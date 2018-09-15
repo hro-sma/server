@@ -35,7 +35,7 @@ namespace weather.station.server
             string connectionString;
             if (HostingEnvironment.IsDevelopment())
             {
-                connectionString = Configuration.GetConnectionString("weatherstationserverLocalContext");
+                connectionString = Configuration.GetConnectionString("WeatherStationServerLocalContext");
             }
             else
             {

@@ -2,23 +2,19 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using weather.station.server.Data;
 
 namespace weather.station.server.Migrations
 {
-    [DbContext(typeof(weatherstationserverContext))]
-    [Migration("20180913092101_initial")]
-    partial class initial
+    [DbContext(typeof(WeatherStationServerContext))]
+    partial class WeatherStationServerContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065");
 
             modelBuilder.Entity("weather.station.server.Models.WeatherUpdate", b =>
                 {

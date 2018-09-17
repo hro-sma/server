@@ -36,19 +36,12 @@ namespace weather.station.server
             if (HostingEnvironment.IsDevelopment())
             {
                 connectionString = Configuration.GetConnectionString("WeatherStationServerLocalContext");
-            }
-            else
-            {
-                connectionString = Configuration.GetConnectionString("WeatherStationServerContext");
-            }
-
-            if (HostingEnvironment.IsDevelopment())
-            {
                 services.AddDbContext<WeatherStationServerContext>(options =>
                     options.UseSqlite(connectionString));
             }
             else
             {
+                connectionString = Configuration.GetConnectionString("WeatherStationServerContext");
                 services.AddDbContext<WeatherStationServerContext>(options =>
                     options.UseSqlServer(connectionString));
             }

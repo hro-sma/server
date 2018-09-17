@@ -11,51 +11,62 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using weather.station.server.Data;
 
 namespace weather.station.server
 {
     public class Startup
     {
-        //SETTING THIS TO FALSE WILL ALLOW ACCESS TO THE PRODUCTION DATABASE
-        private const bool UseDevelopmentDatabase = true;
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            HostingEnvironment = env;
         }
 
         public IConfiguration Configuration { get; }
 
+        public IHostingEnvironment HostingEnvironment { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services, IHostingEnvironment env)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             string connectionString;
-            if (env.IsDevelopment() && UseDevelopmentDatabase)
+            if (HostingEnvironment.IsDevelopment())
             {
-                connectionString = Configuration.GetConnectionString("weatherstationserverLocalContext");
+                connectionString = Configuration.GetConnectionString("WeatherStationServerLocalContext");
             }
             else
             {
-                connectionString = Configuration.GetConnectionString("weatherstationserverContext");
+                connectionString = Configuration.GetConnectionString("WeatherStationServerContext");
             }
-            services.AddDbContext<weatherstationserverContext>(options =>
+
+            if (HostingEnvironment.IsDevelopment())
+            {
+                services.AddDbContext<WeatherStationServerContext>(options =>
+                    options.UseSqlite(connectionString));
+            }
+            else
+            {
+                services.AddDbContext<WeatherStationServerContext>(options =>
                     options.UseSqlServer(connectionString));
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (HostingEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
 
-            app.UseHttpsRedirection();
             app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "api/{controller=WeatherUpdates}/{action=Index}/{id?}");

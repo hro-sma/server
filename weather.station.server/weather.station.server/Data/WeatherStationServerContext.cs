@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using weather.station.server.Models;
 
-    public class weatherstationserverContext : DbContext
+namespace weather.station.server.Data
+{
+    public class WeatherStationServerContext : DbContext
     {
-        public weatherstationserverContext (DbContextOptions<weatherstationserverContext> options)
+        public WeatherStationServerContext (DbContextOptions<WeatherStationServerContext> options)
             : base(options)
         {
         }
 
         public DbSet<weather.station.server.Models.WeatherUpdate> WeatherUpdate { get; set; }
     }
+}

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using weather.station.server.Data;
 using weather.station.server.Models;
 
 namespace weather.station.server.Controllers
@@ -12,9 +13,9 @@ namespace weather.station.server.Controllers
     [Route("api/[controller]")]
     public class WeatherUpdatesController : Controller
     {
-        private readonly weatherstationserverContext _context;
+        private readonly WeatherStationServerContext _context;
 
-        public WeatherUpdatesController(weatherstationserverContext context)
+        public WeatherUpdatesController(WeatherStationServerContext context)
         {
             _context = context;
         }

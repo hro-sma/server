@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using weather.station.server.Data;
+using weather.station.server.Helpers;
 using weather.station.server.Models;
 
 namespace weather.station.server.Controllers
@@ -46,6 +47,30 @@ namespace weather.station.server.Controllers
             }
 
             return Ok(weatherUpdate);
+        }
+
+        // GET: api/weatherupdates/device/f36962f4-d379-4cce-9537-a897a2608579?FromdDate=1231321&ToDate=12312312312312
+        // Gets weatherupdates of a device in a certain timespan.
+        [HttpGet("device/{id}")]
+        public async Task<IActionResult> GetUpdateFromDevice([FromRoute] Guid id, [FromQuery] DateSelectionViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            //Quick null checks. also makes it so the default period is 24hrs
+            var fromDate = model.FromDate != null
+                ? EpochTimeHelper.EpochToDateTime(model.FromDate.Value)
+                : DateTime.Now.Date;
+            var toDate = model.ToDate != null
+                ? EpochTimeHelper.EpochToDateTime(model.ToDate.Value)
+                : DateTime.Now.Date;
+
+            //Truncating time in the query.
+            var updatesFromDevice = await _context.WeatherUpdate.Where(u => u.DeviceId == id && fromDate.Date <= u.TimeStamp.Date && toDate.Date >= u.TimeStamp.Date).ToListAsync();
+
+            return Ok(updatesFromDevice);
         }
 
         // POST: api/WeatherUpdates

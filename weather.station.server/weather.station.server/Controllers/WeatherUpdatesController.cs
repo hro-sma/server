@@ -24,9 +24,25 @@ namespace weather.station.server.Controllers
         // GET: api/WeatherUpdates
         //Gets all updates from the database
         [HttpGet]
-        public IEnumerable<WeatherUpdate> GetWeatherUpdate()
+        public async Task<IActionResult> GetWeatherUpdate([FromQuery] DateSelectionViewModel model)
         {
-            return _context.WeatherUpdate;
+            //Quick null checks. also makes it so the default period is 24hrs
+            var fromDate = model.FromDate != null
+                ? EpochTimeHelper.EpochToDateTime(model.FromDate.Value)
+                : DateTime.Now.Date;
+            var toDate = model.ToDate != null
+                ? EpochTimeHelper.EpochToDateTime(model.ToDate.Value)
+                : DateTime.Now.Date;
+
+            if ((toDate - fromDate).TotalHours > 24)
+            {
+                return BadRequest();
+            }
+
+            //Truncating time in the query.
+            var updatesWithingTimeSpan = await _context.WeatherUpdate.Where(u => fromDate.Date <= u.TimeStamp.Date && toDate.Date >= u.TimeStamp.Date).ToListAsync();
+
+            return Ok(updatesWithingTimeSpan);
         }
 
         // GET: api/WeatherUpdates/5
@@ -66,6 +82,12 @@ namespace weather.station.server.Controllers
             var toDate = model.ToDate != null
                 ? EpochTimeHelper.EpochToDateTime(model.ToDate.Value)
                 : DateTime.Now.Date;
+
+
+            if ((toDate - fromDate).TotalHours > 72)
+            {
+                return BadRequest();
+            }
 
             //Truncating time in the query.
             var updatesFromDevice = await _context.WeatherUpdate.Where(u => u.DeviceId == id && fromDate.Date <= u.TimeStamp.Date && toDate.Date >= u.TimeStamp.Date).ToListAsync();

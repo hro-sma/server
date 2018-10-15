@@ -1,0 +1,24 @@
+version: "3"
+services:
+  web:
+    build: .
+    # restart: always
+    ports:
+      - 5000:5000
+    links:
+      - db
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    # restart: always
+    ports:
+      - 3306:3006
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=4uwCV3PyKc6qjDT5VyaRp6q7
+      - MYSQL_DATABASE=site
+      - MYSQL_USER=site_user
+      - MYSQL_PASSWORD=MPEvwMsna2UQUvjhX7uTc5KE

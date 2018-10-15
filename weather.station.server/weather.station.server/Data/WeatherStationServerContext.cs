@@ -12,6 +12,7 @@ namespace weather.station.server.Data
         public WeatherStationServerContext (DbContextOptions<WeatherStationServerContext> options)
             : base(options)
         {
+            Database.Migrate();
         }
 
         public DbSet<weather.station.server.Models.WeatherUpdate> WeatherUpdate { get; set; }

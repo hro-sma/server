@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using weather.station.server.Data;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace weather.station.server
 {
@@ -43,7 +44,7 @@ namespace weather.station.server
             {
                 connectionString = Configuration.GetConnectionString("WeatherStationServerContext");
                 services.AddDbContext<WeatherStationServerContext>(options =>
-                    options.UseSqlServer(connectionString));
+                    options.UseMySql(connectionString));
             }
         }
 
@@ -53,11 +54,6 @@ namespace weather.station.server
             if (HostingEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseHsts();
-                app.UseHttpsRedirection();
             }
 
             app.UseMvc(routes =>

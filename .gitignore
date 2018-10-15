@@ -415,3 +415,7 @@ ASALocalRun/
 
 ### SqLite ###
 *.db
+
+### DotNet Cre ###
+weather.station.server/weather.station.server/appsettings.json
+weather.station.server/weather.station.server/db

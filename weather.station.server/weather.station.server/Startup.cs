@@ -51,7 +51,6 @@ namespace weather.station.server
             }
 
             // Register services
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IRateLimitService, RateLimitService>();
 
             // Configure custom services

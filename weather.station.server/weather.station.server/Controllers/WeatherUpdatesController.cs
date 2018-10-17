@@ -19,13 +19,10 @@ namespace weather.station.server.Controllers
 
         private readonly IRateLimitService _ratelimitService;
 
-        private readonly IHttpContextAccessor _accessor;
-
-        public WeatherUpdatesController(WeatherStationServerContext context, IRateLimitService ratelimitService, IHttpContextAccessor accessor)
+        public WeatherUpdatesController(WeatherStationServerContext context, IRateLimitService ratelimitService)
         {
             _context = context;
             _ratelimitService = ratelimitService;
-            _accessor = accessor;
         }
 
         // GET: api/WeatherUpdates

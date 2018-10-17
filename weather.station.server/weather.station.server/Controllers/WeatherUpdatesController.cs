@@ -40,7 +40,10 @@ namespace weather.station.server.Controllers
             }
 
             //Truncating time in the query.
-            var updatesWithingTimeSpan = await _context.WeatherUpdate.Where(u => fromDate.Date <= u.TimeStamp.Date && toDate.Date >= u.TimeStamp.Date).ToListAsync();
+            var updatesWithingTimeSpan = await _context.WeatherUpdate
+                .Where(u => fromDate.Date <= u.TimeStamp.Date && toDate.Date >= u.TimeStamp.Date)
+                .OrderByDescending(u => u.TimeStamp)
+                .ToListAsync();
 
             return Ok(updatesWithingTimeSpan);
         }
@@ -90,7 +93,10 @@ namespace weather.station.server.Controllers
             }
 
             //Truncating time in the query.
-            var updatesFromDevice = await _context.WeatherUpdate.Where(u => u.DeviceId == id && fromDate.Date <= u.TimeStamp.Date && toDate.Date >= u.TimeStamp.Date).ToListAsync();
+            var updatesFromDevice = await _context.WeatherUpdate
+                .Where(u => u.DeviceId == id && fromDate.Date <= u.TimeStamp.Date && toDate.Date >= u.TimeStamp.Date)
+                .OrderByDescending(u => u.TimeStamp)
+                .ToListAsync();
 
             return Ok(updatesFromDevice);
         }

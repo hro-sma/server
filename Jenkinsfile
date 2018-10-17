@@ -14,8 +14,8 @@ docker build --force-rm -t weatherserver .'''
     }
     stage('Restart') {
       steps {
-        sh '''docker stop $(docker ps -q --filter ancestor=weatherserver)
-docker run --restart=always --net=host -d -t weatherserver'''
+        sh '''docker stop weather-station-server
+docker run --restart=always --net=host --name=weather-station-server -d -t weatherserver'''
       }
     }
   }

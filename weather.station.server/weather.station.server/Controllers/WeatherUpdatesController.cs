@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using weather.station.server.Actions;
 using weather.station.server.Data;
 using weather.station.server.Helpers;
 using weather.station.server.Models;
-using weather.station.server.Services;
 
 namespace weather.station.server.Controllers
 {
@@ -17,12 +17,9 @@ namespace weather.station.server.Controllers
     {
         private readonly WeatherStationServerContext _context;
 
-        private readonly IRateLimitService _ratelimitService;
-
-        public WeatherUpdatesController(WeatherStationServerContext context, IRateLimitService ratelimitService)
+        public WeatherUpdatesController(WeatherStationServerContext context)
         {
             _context = context;
-            _ratelimitService = ratelimitService;
         }
 
         // GET: api/WeatherUpdates
@@ -108,6 +105,7 @@ namespace weather.station.server.Controllers
         // POST: api/WeatherUpdates
         // Adds an update to the database
         [HttpPost]
+        [RateLimit(300)]
         public async Task<IActionResult> PostWeatherUpdate([FromBody] WeatherUpdate weatherUpdate)
         {
             if (!ModelState.IsValid)
@@ -115,19 +113,11 @@ namespace weather.station.server.Controllers
                 return BadRequest(ModelState);
             }
 
-            string clientIp = Request.Headers["X-Forwarded-For"];
-
-            if (!_ratelimitService.AllowRequest(clientIp))
-            {
-                return StatusCode(429);
-            }
-
             weatherUpdate.TimeStamp = DateTime.UtcNow;
             weatherUpdate.WeatherUpdateId = Guid.NewGuid();
 
             _context.WeatherUpdate.Add(weatherUpdate);
             await _context.SaveChangesAsync();
-            _ratelimitService.RegisterRequest(clientIp);
 
             return CreatedAtAction("GetWeatherUpdate", new { id = weatherUpdate.WeatherUpdateId }, weatherUpdate);
         }

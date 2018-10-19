@@ -1,4 +1,4 @@
-## Samenvatting van wijzingen
+## Samenvatting van wijzigingen
 
 ## Test instructies
 

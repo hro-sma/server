@@ -14,7 +14,7 @@ namespace weather.station.server.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065");
 
             modelBuilder.Entity("weather.station.server.Models.WeatherUpdate", b =>
                 {

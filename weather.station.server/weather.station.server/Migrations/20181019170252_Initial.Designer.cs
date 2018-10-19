@@ -9,14 +9,14 @@ using weather.station.server.Data;
 namespace weather.station.server.Migrations
 {
     [DbContext(typeof(WeatherStationServerContext))]
-    [Migration("20180915213939_Initial")]
+    [Migration("20181019170252_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065");
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
 
             modelBuilder.Entity("weather.station.server.Models.WeatherUpdate", b =>
                 {
@@ -27,7 +27,7 @@ namespace weather.station.server.Migrations
 
                     b.Property<double>("Humidity");
 
-                    b.Property<double>("TempratureC");
+                    b.Property<double>("TemperatureC");
 
                     b.Property<DateTime>("TimeStamp");
 

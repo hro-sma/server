@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using weather.station.server.Data;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Microsoft.AspNetCore.Http;
 
 namespace weather.station.server
 {
@@ -32,6 +33,7 @@ namespace weather.station.server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMemoryCache();
 
             string connectionString;
             if (HostingEnvironment.IsDevelopment())
@@ -54,6 +56,20 @@ namespace weather.station.server
             if (HostingEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                // Make sure there is always a X-Forwarded-For header on development environments without a proxy
+                app.Use((context, next) =>
+                {
+                    string forwaredHeader = context.Request.Headers["X-Forwarded-For"];
+
+                    if (forwaredHeader == null)
+                    {
+                        var clientIp = context.Connection.RemoteIpAddress.ToString();
+                        context.Request.Headers["X-Forwarded-For"] = clientIp;
+                    }
+
+                    return next.Invoke();
+                });
             }
 
             app.UseMvc(routes =>

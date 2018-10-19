@@ -25,7 +25,7 @@ namespace weather.station.server.Migrations
 
                     b.Property<double>("Humidity");
 
-                    b.Property<double>("TempratureC");
+                    b.Property<double>("TemperatureC");
 
                     b.Property<DateTime>("TimeStamp");
 

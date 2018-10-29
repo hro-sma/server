@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using weather.station.server.Actions;
 using weather.station.server.Data;
 using weather.station.server.Helpers;
 using weather.station.server.Models;
@@ -40,7 +41,10 @@ namespace weather.station.server.Controllers
             }
 
             //Truncating time in the query.
-            var updatesWithingTimeSpan = await _context.WeatherUpdate.Where(u => fromDate.Date <= u.TimeStamp.Date && toDate.Date >= u.TimeStamp.Date).ToListAsync();
+            var updatesWithingTimeSpan = await _context.WeatherUpdate
+                .Where(u => fromDate.Date <= u.TimeStamp.Date && toDate.Date >= u.TimeStamp.Date)
+                .OrderByDescending(u => u.TimeStamp)
+                .ToListAsync();
 
             return Ok(updatesWithingTimeSpan);
         }
@@ -90,7 +94,10 @@ namespace weather.station.server.Controllers
             }
 
             //Truncating time in the query.
-            var updatesFromDevice = await _context.WeatherUpdate.Where(u => u.DeviceId == id && fromDate.Date <= u.TimeStamp.Date && toDate.Date >= u.TimeStamp.Date).ToListAsync();
+            var updatesFromDevice = await _context.WeatherUpdate
+                .Where(u => u.DeviceId == id && fromDate.Date <= u.TimeStamp.Date && toDate.Date >= u.TimeStamp.Date)
+                .OrderByDescending(u => u.TimeStamp)
+                .ToListAsync();
 
             return Ok(updatesFromDevice);
         }
@@ -124,6 +131,7 @@ namespace weather.station.server.Controllers
         // POST: api/WeatherUpdates
         // Adds an update to the database
         [HttpPost]
+        [RateLimit(300)]
         public async Task<IActionResult> PostWeatherUpdate([FromBody] WeatherUpdate weatherUpdate)
         {
             if (!ModelState.IsValid)

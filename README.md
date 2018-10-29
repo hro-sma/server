@@ -7,6 +7,7 @@ This repository contains the back-end server for all the ESP8266 Weather staions
 ## Installation
 1. run `git clone https://github.com/hro-sma/weather-station-server.git`
 2. `cd` to the `weather.station.server/weather.station.server` directory
+3. Rename `appsettings.example.json` to `appsettings.json`
 3. Initialize a local SqLite database with `dotnet ef database update`
 4. You are now ready to use the application and start it with `dotnet run`
 

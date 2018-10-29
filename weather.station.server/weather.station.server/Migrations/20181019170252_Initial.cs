@@ -14,7 +14,7 @@ namespace weather.station.server.Migrations
                     WeatherUpdateId = table.Column<Guid>(nullable: false),
                     DeviceId = table.Column<Guid>(nullable: false),
                     TimeStamp = table.Column<DateTime>(nullable: false),
-                    TempratureC = table.Column<double>(nullable: false),
+                    TemperatureC = table.Column<double>(nullable: false),
                     Humidity = table.Column<double>(nullable: false)
                 },
                 constraints: table =>

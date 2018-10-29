@@ -95,6 +95,32 @@ namespace weather.station.server.Controllers
             return Ok(updatesFromDevice);
         }
 
+        [HttpGet("device/{id}/latest/{amount}")]
+        public async Task<IActionResult> GetLatestUpdate([FromRoute] Guid id, [FromRoute] int? amount)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            if (amount == null)
+            {
+                var lastUpdate = await _context.WeatherUpdate.Where(d => d.DeviceId == id).FirstOrDefaultAsync();
+                if (lastUpdate == null)
+                {
+                    return NotFound();
+                }
+                return Ok(lastUpdate);
+            }
+            if (amount.Value > 10)
+            {
+                return BadRequest();
+            }
+
+            var updates = await _context.WeatherUpdate.Where(d => d.DeviceId == id).Take(amount.Value).ToListAsync();
+            return Ok(updates);
+        }
+
         // POST: api/WeatherUpdates
         // Adds an update to the database
         [HttpPost]

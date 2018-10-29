@@ -15,5 +15,6 @@ namespace weather.station.server.Models
         public DateTime TimeStamp { get; set; }
         public double TemperatureC { get; set; }
         public double Humidity { get; set; }
+	public double Windspeed { get; set; }
     }
 }

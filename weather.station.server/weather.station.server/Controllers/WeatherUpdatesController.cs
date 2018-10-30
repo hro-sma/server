@@ -123,7 +123,7 @@ namespace weather.station.server.Controllers
         // POST: api/WeatherUpdates
         // Adds an update to the database
         [HttpPost]
-        [RateLimit(300)]
+        // [RateLimit(300)]
         public async Task<IActionResult> PostWeatherUpdate([FromBody] WeatherUpdate weatherUpdate)
         {
             if (!ModelState.IsValid)

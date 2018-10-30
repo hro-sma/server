@@ -31,7 +31,7 @@ namespace weather.station.server.Migrations
 
                     b.Property<DateTime>("TimeStamp");
 
-                    b.Property<double>("windspeed");
+                    b.Property<double>("Windspeed");
 
                     b.HasKey("WeatherUpdateId");
 

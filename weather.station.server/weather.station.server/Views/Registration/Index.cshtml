@@ -1,0 +1,34 @@
+@{
+    ViewData["Title"] = "Registreer je weerstation";
+}
+@model DeviceViewModel;
+
+<h1>Registreer je weerstation</h1>
+<div class="alert alert-info">Vul het onderstaande formulier in om je weerstation aan te melden. Na het versturen zul je een <code>deviceId</code> ontvangen
+waarmee je data naar de server kunt versturen.</code></div>
+
+<form action="/registration" method="post">
+    <div class="form-group">
+        <label asp-for="StudentNumber"></label>
+        <input asp-for="StudentNumber" class="form-control" />
+        <span asp-validation-for="StudentNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DeviceName"></label>
+        <input asp-for="DeviceName" class="form-control" />
+        <span asp-validation-for="DeviceName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Location"></label>
+        <input asp-for="Location" class="form-control" />
+        <span asp-validation-for="Location" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Registreer" class="btn btn-primary" />
+    </div>
+    @Html.AntiForgeryToken()
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

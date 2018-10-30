@@ -7,7 +7,7 @@ namespace weather.station.server.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<double>(
-                name: "windspeed",
+                name: "Windspeed",
                 table: "WeatherUpdate",
                 nullable: false,
                 defaultValue: 0.0);
@@ -16,7 +16,7 @@ namespace weather.station.server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "windspeed",
+                name: "Windspeed",
                 table: "WeatherUpdate");
         }
     }

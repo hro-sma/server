@@ -72,9 +72,12 @@ namespace weather.station.server
                 });
             }
 
+            app.UseStaticFiles();
             app.UseMvc(routes =>
             {
-                routes.MapRoute("default", "api/{controller=WeatherUpdates}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

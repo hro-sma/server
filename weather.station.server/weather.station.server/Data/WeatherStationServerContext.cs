@@ -16,5 +16,6 @@ namespace weather.station.server.Data
         }
 
         public DbSet<weather.station.server.Models.WeatherUpdate> WeatherUpdate { get; set; }
+        public DbSet<weather.station.server.Models.Device> Device { get; set; }
     }
 }

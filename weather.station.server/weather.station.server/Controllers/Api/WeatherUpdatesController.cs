@@ -9,8 +9,9 @@ using weather.station.server.Actions;
 using weather.station.server.Data;
 using weather.station.server.Helpers;
 using weather.station.server.Models;
+using weather.station.server.Models.ViewModels;
 
-namespace weather.station.server.Controllers
+namespace weather.station.server.Controllers.Api
 {
     [Route("api/[controller]")]
     public class WeatherUpdatesController : Controller

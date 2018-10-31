@@ -10,8 +10,7 @@
     waarmee je data naar de server kunt versturen.
 </div>
 
-<form action="/registration" method="post">
-
+<form asp-controller="registration" asp-action="register" method="post">
     <div class="form-group">
         <label asp-for="StudentNumber"></label>
         <input asp-for="StudentNumber" class="form-control" />

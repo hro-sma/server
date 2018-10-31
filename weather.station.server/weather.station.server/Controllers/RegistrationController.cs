@@ -46,8 +46,6 @@ namespace weather.station.server.Controllers
                 StudentNumber = postData.StudentNumber,
 				Latitude = postData.Latitude,
 				Longitude = postData.Longitude
-
-				
             };
 
             _context.Device.Add(device);

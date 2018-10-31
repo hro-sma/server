@@ -7,7 +7,6 @@ using weather.station.server.Models.ViewModels;
 
 namespace weather.station.server.Controllers
 {
-    [Route("/[controller]")]
     public class RegistrationController : Controller
     {
         private WeatherStationServerContext _context;

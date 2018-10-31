@@ -38,14 +38,17 @@ namespace weather.station.server.Controllers
             if (!this.ModelState.IsValid)
             {
                 return BadRequest();
-            }
+			}
 
             Device device = new Device
             {
                 DeviceId = Guid.NewGuid(),
                 DeviceName = postData.DeviceName,
                 StudentNumber = postData.StudentNumber,
-                Location = postData.Location
+				Latitude = postData.Latitude,
+				Longitude = postData.Longitude
+
+				
             };
 
             _context.Device.Add(device);

@@ -15,9 +15,11 @@ namespace weather.station.server.Models.ViewModels
         [DataType(DataType.Text)]
         public string DeviceName { get; set; }
 
-        [Required]
-        [Display(Name = "Locatie")]
-        [DataType(DataType.Text)]
-        public string Location { get; set; }
-    }
+	    [Required]
+	    public double Latitude { get; set; }
+
+
+	    [Required]
+	    public double Longitude { get; set; }
+	}
 }

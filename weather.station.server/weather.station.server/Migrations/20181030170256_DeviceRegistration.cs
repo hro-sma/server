@@ -14,7 +14,7 @@ namespace weather.station.server.Migrations
                     DeviceId = table.Column<Guid>(nullable: false),
                     StudentNumber = table.Column<string>(nullable: true),
                     DeviceName = table.Column<string>(nullable: true),
-                    Location = table.Column<string>(nullable: true)
+                  
                 },
                 constraints: table =>
                 {

@@ -1,13 +1,17 @@
 @{
     ViewData["Title"] = "Registreer je weerstation";
 }
-@model DeviceViewModel;
+@model DeviceViewModel
 
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet' />
 <h1>Registreer je weerstation</h1>
-<div class="alert alert-info">Vul het onderstaande formulier in om je weerstation aan te melden. Na het versturen zul je een <code>deviceId</code> ontvangen
-waarmee je data naar de server kunt versturen.</div>
+<div class="alert alert-info">
+    Vul het onderstaande formulier in om je weerstation aan te melden. Na het versturen zul je een <code>deviceId</code> ontvangen
+    waarmee je data naar de server kunt versturen.
+</div>
 
 <form action="/registration" method="post">
+
     <div class="form-group">
         <label asp-for="StudentNumber"></label>
         <input asp-for="StudentNumber" class="form-control" />
@@ -18,17 +22,36 @@ waarmee je data naar de server kunt versturen.</div>
         <input asp-for="DeviceName" class="form-control" />
         <span asp-validation-for="DeviceName" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Location"></label>
-        <input asp-for="Location" class="form-control" />
-        <span asp-validation-for="Location" class="text-danger"></span>
+    <div class="row">
+
+        <div class="col-sm-6">
+            <div id='map'></div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label asp-for="Latitude"></label>
+                <input asp-for="Latitude" class="form-control" readonly />
+                <span asp-validation-for="Latitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Longitude"></label>
+                <input asp-for="Longitude" class="form-control" readonly />
+                <span asp-validation-for="Longitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Registreer" class="btn btn-primary" />
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <input type="submit" value="Registreer" class="btn btn-primary" />
-    </div>
+
+
     @Html.AntiForgeryToken()
 </form>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
+    <script src="~/js/map.js"></script>
 }
+

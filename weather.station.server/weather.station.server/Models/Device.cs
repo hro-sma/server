@@ -9,6 +9,7 @@ namespace weather.station.server.Models
         public Guid DeviceId { get; set; }
         public string StudentNumber { get; set; }
         public string DeviceName { get; set; }
-        public string Location { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
     }
 }

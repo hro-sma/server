@@ -36,7 +36,7 @@ namespace weather.station.server.Controllers
             if (!this.ModelState.IsValid)
             {
                 return BadRequest();
-			}
+            }
 
             Device device = new Device
             {

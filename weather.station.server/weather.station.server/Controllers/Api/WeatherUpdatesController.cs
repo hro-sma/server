@@ -141,6 +141,11 @@ namespace weather.station.server.Controllers.Api
                 return BadRequest(ModelState);
             }
 
+            if (!_context.Device.Any(d => d.DeviceId == weatherUpdate.DeviceId))
+            {
+                return BadRequest("Device does not exist");
+            }
+
             weatherUpdate.TimeStamp = DateTime.UtcNow;
             weatherUpdate.WeatherUpdateId = Guid.NewGuid();
 

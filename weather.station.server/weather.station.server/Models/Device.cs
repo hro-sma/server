@@ -10,6 +10,6 @@ namespace weather.station.server.Models
         public string StudentNumber { get; set; }
         public string DeviceName { get; set; }
         public double Longitude { get; set; }
-		public double Latitude { get; set; }
+        public double Latitude { get; set; }
     }
 }

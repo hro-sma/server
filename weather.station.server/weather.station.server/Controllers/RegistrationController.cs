@@ -19,7 +19,6 @@ namespace weather.station.server.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            // ViewData["Page"] = "HomePages/View";
             return View();
         }
 

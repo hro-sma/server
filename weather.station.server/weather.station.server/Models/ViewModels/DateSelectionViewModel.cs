@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace weather.station.server.Models
+namespace weather.station.server.Models.ViewModels
 {
     public class DateSelectionViewModel
     {

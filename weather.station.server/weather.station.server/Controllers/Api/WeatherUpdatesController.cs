@@ -9,8 +9,9 @@ using weather.station.server.Actions;
 using weather.station.server.Data;
 using weather.station.server.Helpers;
 using weather.station.server.Models;
+using weather.station.server.Models.ViewModels;
 
-namespace weather.station.server.Controllers
+namespace weather.station.server.Controllers.Api
 {
     [Route("api/[controller]")]
     public class WeatherUpdatesController : Controller
@@ -79,6 +80,13 @@ namespace weather.station.server.Controllers
                 return BadRequest(ModelState);
             }
 
+            bool deviceExists = _context.Device.Any(d => d.DeviceId == id);
+
+            if (!deviceExists)
+            {
+                return NotFound();
+            }
+
             //Quick null checks. also makes it so the default period is 24hrs
             var fromDate = model.FromDate != null
                 ? EpochTimeHelper.EpochToDateTime(model.FromDate.Value)
@@ -106,14 +114,16 @@ namespace weather.station.server.Controllers
         [RateLimit(10)]
         public async Task<IActionResult> GetLatestUpdate([FromRoute] Guid id, [FromRoute] int amount)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || amount > 10)
             {
                 return BadRequest();
             }
 
-            if (amount > 10)
+            bool deviceExists = _context.Device.Any(d => d.DeviceId == id);
+
+            if (!deviceExists)
             {
-                return BadRequest();
+                return NotFound();
             }
 
             var updates = await _context.WeatherUpdate.Where(d => d.DeviceId == id).OrderByDescending(d => d.TimeStamp).Take(amount).ToListAsync();

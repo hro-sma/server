@@ -1,7 +1,9 @@
 using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Memory;
+using weather.station.server.Data;
 
 namespace weather.station.server.Actions
 {
@@ -24,20 +26,39 @@ namespace weather.station.server.Actions
             /// </summary>
             private readonly IMemoryCache _memoryCache;
 
+            private readonly WeatherStationServerContext _context;
+
             /// <summary>
             /// Minium time periode in seconds between two requests
             /// </summary>
             private int _timePeriode;
 
-            public RateLimitAttributeImpl( IMemoryCache memoryCache, int timePeriode)
+            public RateLimitAttributeImpl(IMemoryCache memoryCache, WeatherStationServerContext context, int timePeriode)
             {
                 _timePeriode = timePeriode;
                 _memoryCache = memoryCache;
+                _context = context;
             }
 
             public void OnActionExecuting(ActionExecutingContext context)
             {
+                // Collect header information
                 string clientIp = context.HttpContext.Request.Headers["X-Forwarded-For"];
+                string deviceId = context.HttpContext.Request.Headers["X-Device-Id"];
+
+                // Try to parse a given deviceId
+                if (Guid.TryParse(deviceId, out Guid parsedId))
+                {
+                    if (_context.Device.Any(d => d.DeviceId == parsedId))
+                    {
+                        if (!this.AllowRequest(clientIp + ":" + deviceId))
+                        {
+                            context.Result = new StatusCodeResult(429);
+                        }
+                        
+                        return;
+                    }
+                }
 
                 if (!this.AllowRequest(clientIp))
                 {
@@ -47,8 +68,11 @@ namespace weather.station.server.Actions
 
             public void OnActionExecuted(ActionExecutedContext context)
             {
+                // Collect header information
                 string clientIp = context.HttpContext.Request.Headers["X-Forwarded-For"];
-                this.RegisterRequest(clientIp);
+                string deviceId = context.HttpContext.Request.Headers["X-Device-Id"];
+
+                this.RegisterRequest(deviceId != null ? clientIp + ":" + deviceId : clientIp);
             }
 
             /// <summary>

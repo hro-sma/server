@@ -46,21 +46,25 @@ namespace weather.station.server.Actions
                 string clientIp = context.HttpContext.Request.Headers["X-Forwarded-For"];
                 string deviceId = context.HttpContext.Request.Headers["X-Device-Id"];
 
+                // Collect action information
+                string controllerName = context.RouteData.Values["controller"].ToString();
+                string actionName = context.RouteData.Values["action"].ToString();
+
                 // Try to parse a given deviceId
                 if (Guid.TryParse(deviceId, out Guid parsedId))
                 {
                     if (_context.Device.Any(d => d.DeviceId == parsedId))
                     {
-                        if (!this.AllowRequest(clientIp + ":" + deviceId))
+                        if (!this.AllowRequest(clientIp + ":" + deviceId, controllerName + ":" + actionName))
                         {
                             context.Result = new StatusCodeResult(429);
                         }
-                        
+
                         return;
                     }
                 }
 
-                if (!this.AllowRequest(clientIp))
+                if (!this.AllowRequest(clientIp, controllerName + ":" + actionName))
                 {
                     context.Result = new StatusCodeResult(429);
                 }
@@ -72,17 +76,22 @@ namespace weather.station.server.Actions
                 string clientIp = context.HttpContext.Request.Headers["X-Forwarded-For"];
                 string deviceId = context.HttpContext.Request.Headers["X-Device-Id"];
 
-                this.RegisterRequest(deviceId != null ? clientIp + ":" + deviceId : clientIp);
+                // Collect action information
+                string controllerName = context.RouteData.Values["controller"].ToString();
+                string actionName = context.RouteData.Values["action"].ToString();
+
+                this.RegisterRequest(deviceId != null ? clientIp + ":" + deviceId : clientIp, controllerName + ":" + actionName);
             }
 
             /// <summary>
             /// Check if the given IP is allowed to perform a request
             /// </summary>
-            /// <param name="ip">IPv4 address of the client</param>
+            /// <param name="clientId">Identifier of the client</param>
+            /// <param name="endpointId">Identifier of the endpoint</param>
             /// <returns>Boolean indicating if a request is allowed or not</returns>
-            public bool AllowRequest(string ip)
+            public bool AllowRequest(string clientId, string endpointId)
             {
-                if (this.CacheEntryExists(ip))
+                if (this.CacheEntryExists(clientId + ":" + endpointId))
                 {
                     return false;
                 }
@@ -93,10 +102,11 @@ namespace weather.station.server.Actions
             /// <summary>
             /// Register a request from the given IP
             /// </summary>
-            /// <param name="ip">IPv4 address of the client</param>
-            public void RegisterRequest(string ip)
+            /// <param name="clientId">Identifier of the client</param>
+            /// <param name="endpointId">Identifier of the endpoint</param>
+            public void RegisterRequest(string clientId, string endpointId)
             {
-                this.CreateCacheEntry(ip, DateTime.Now.ToString());
+                this.CreateCacheEntry(clientId + ":" + endpointId, DateTime.Now.ToString());
             }
 
             /// <summary>

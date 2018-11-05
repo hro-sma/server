@@ -1,4 +1,6 @@
 # Weather station server for Smart Things Minor
+[![Build Status](https://travis-ci.org/hro-sma/weather-station-server.svg?branch=master)](https://travis-ci.org/hro-sma/weather-station-server)
+
 This repository contains the back-end server for all the ESP8266 Weather staions.
 
 ## Prerequisites

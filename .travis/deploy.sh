@@ -1,8 +1,8 @@
 #!/bin/bash
 
 eval "$(ssh-agent -s)"
-chmod 600 .travis/deploy_rsa
-ssh-add .travis/deploy_rsa
+chmod 600 deploy_rsa
+ssh-add deploy_rsa
 
 # Skip this command if you don't need to execute any additional commands after deploying.
 ssh deploy@$IP -p $PORT <<EOF

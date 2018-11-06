@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace weather.station.server.Models.ViewModels
@@ -19,6 +18,6 @@ namespace weather.station.server.Models.ViewModels
         public double Latitude { get; set; }
 
         [Required]
-	    public double Longitude { get; set; }
-	}
+        public double Longitude { get; set; }
+    }
 }

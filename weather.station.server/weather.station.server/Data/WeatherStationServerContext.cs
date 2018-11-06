@@ -13,10 +13,20 @@ namespace weather.station.server.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<WeatherUpdate>()
-                .HasKey(c => c.DeviceId);
             modelBuilder.Entity<Device>()
-                .HasMany<WeatherUpdate>();
+                .HasKey(d => d.DeviceId);
+
+            modelBuilder.Entity<WeatherUpdate>()
+                .HasKey(w => w.WeatherUpdateId);
+
+            modelBuilder.Entity<WeatherUpdate>()
+                .HasOne(d => d.Device)
+                .WithMany(w => w.WeatherUpdates)
+                .HasForeignKey(w => w.DeviceId);
+
+            modelBuilder.Entity<WeatherUpdate>()
+                .Property(d => d.DeviceId)
+                .IsRequired();
         }
 
         public DbSet<WeatherUpdate> WeatherUpdate { get; set; }

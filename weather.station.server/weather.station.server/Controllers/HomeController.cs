@@ -21,11 +21,13 @@ namespace weather.station.server.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var latestPerId = new Dictionary<Guid, WeatherUpdate>();
             if (_context.WeatherUpdate.Any())
             {
                 var updates =
-                    _context.WeatherUpdate.Include(d => d.DeviceId).GroupBy(i => i.DeviceId); //get updates with the devices
-                var latestPerId = new Dictionary<Guid, WeatherUpdate>();
+                    _context.WeatherUpdate.Include(d => d.Device).GroupBy(i => i.DeviceId); //get updates with the devices
+            
+                
                 foreach (var group in updates)
                 {
                     var key = group.Key;
@@ -33,7 +35,8 @@ namespace weather.station.server.Controllers
                     latestPerId.Add(key, test);
                 }
             }
-          
+
+            //ViewData["latestPerId"] = latestPerId;
 
             return View();
         }

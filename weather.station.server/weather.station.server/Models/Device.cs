@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace weather.station.server.Models
@@ -11,5 +12,6 @@ namespace weather.station.server.Models
         public string DeviceName { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
+        public ICollection<WeatherUpdate> WeatherUpdates { get; set; }
     }
 }

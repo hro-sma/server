@@ -12,6 +12,7 @@ namespace weather.station.server.Models
         public Guid WeatherUpdateId { get; set; }
         [Required]
         public Guid DeviceId { get; set; }
+        
         public DateTime TimeStamp { get; set; }
         public double TemperatureC { get; set; }
         public double Humidity { get; set; }

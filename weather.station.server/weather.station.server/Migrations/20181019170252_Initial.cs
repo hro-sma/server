@@ -12,7 +12,6 @@ namespace weather.station.server.Migrations
                 columns: table => new
                 {
                     WeatherUpdateId = table.Column<Guid>(nullable: false),
-                    DeviceId = table.Column<Guid>(nullable: false),
                     TimeStamp = table.Column<DateTime>(nullable: false),
                     TemperatureC = table.Column<double>(nullable: false),
                     Humidity = table.Column<double>(nullable: false)

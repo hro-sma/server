@@ -51,7 +51,17 @@ namespace weather.station.server.Migrations
 
                     b.HasKey("WeatherUpdateId");
 
+                    b.HasIndex("DeviceId");
+
                     b.ToTable("WeatherUpdate");
+                });
+
+            modelBuilder.Entity("weather.station.server.Models.WeatherUpdate", b =>
+                {
+                    b.HasOne("weather.station.server.Models.Device", "Device")
+                        .WithMany()
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

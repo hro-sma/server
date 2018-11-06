@@ -126,7 +126,10 @@ namespace weather.station.server.Controllers.Api
                 return NotFound();
             }
 
-            var updates = await _context.WeatherUpdate.Where(d => d.DeviceId == id).OrderByDescending(d => d.TimeStamp).Take(amount).ToListAsync();
+            var updates = await _context.WeatherUpdate
+                .Where(d => d.DeviceId == id
+                           )
+                .OrderByDescending(d => d.TimeStamp).Take(amount).ToListAsync();
             return Ok(updates);
         }
 

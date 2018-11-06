@@ -9,7 +9,7 @@ using weather.station.server.Data;
 namespace weather.station.server.Migrations
 {
     [DbContext(typeof(WeatherStationServerContext))]
-    [Migration("20181106155859_final")]
+    [Migration("20181106162517_final")]
     partial class final
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,7 +36,8 @@ namespace weather.station.server.Migrations
                     b.ToTable("Device");
 
                     b.HasData(
-                        new { DeviceId = new Guid("1ad80c92-847a-45dd-8397-43f86b417bd9"), DeviceName = "test", Latitude = 5.0, Longitude = 5.0, StudentNumber = "hjdcbs" }
+                        new { DeviceId = new Guid("b7886e5a-515f-4c60-b45c-ecf9add01ea6"), DeviceName = "test", Latitude = 52.0, Longitude = 4.5, StudentNumber = "hjdcbs" },
+                        new { DeviceId = new Guid("750de99f-c0d1-458e-8d26-ff4237bcdfd2"), DeviceName = "test", Latitude = 52.0, Longitude = 5.0, StudentNumber = "bla" }
                     );
                 });
 
@@ -62,7 +63,8 @@ namespace weather.station.server.Migrations
                     b.ToTable("WeatherUpdate");
 
                     b.HasData(
-                        new { WeatherUpdateId = new Guid("937272a5-3f82-41ec-80af-395d39690be7"), DeviceId = new Guid("1ad80c92-847a-45dd-8397-43f86b417bd9"), Humidity = 5.0, TemperatureC = 5.0, TimeStamp = new DateTime(2018, 11, 6, 16, 58, 58, 715, DateTimeKind.Local), Windspeed = 5.0 }
+                        new { WeatherUpdateId = new Guid("a598b97e-162d-4b68-a2a9-4e831d0fc90d"), DeviceId = new Guid("b7886e5a-515f-4c60-b45c-ecf9add01ea6"), Humidity = 5.0, TemperatureC = 10.0, TimeStamp = new DateTime(2018, 11, 6, 17, 25, 17, 209, DateTimeKind.Local), Windspeed = 5.0 },
+                        new { WeatherUpdateId = new Guid("e5fd6bb4-792b-44fc-8966-9e50b663ebe3"), DeviceId = new Guid("750de99f-c0d1-458e-8d26-ff4237bcdfd2"), Humidity = 5.0, TemperatureC = 10.0, TimeStamp = new DateTime(2018, 11, 6, 17, 25, 17, 210, DateTimeKind.Local), Windspeed = 5.0 }
                     );
                 });
 

@@ -47,12 +47,22 @@ namespace weather.station.server.Migrations
             migrationBuilder.InsertData(
                 table: "Device",
                 columns: new[] { "DeviceId", "DeviceName", "Latitude", "Longitude", "StudentNumber" },
-                values: new object[] { new Guid("1ad80c92-847a-45dd-8397-43f86b417bd9"), "test", 5.0, 5.0, "hjdcbs" });
+                values: new object[] { new Guid("b7886e5a-515f-4c60-b45c-ecf9add01ea6"), "test", 52.0, 4.5, "hjdcbs" });
+
+            migrationBuilder.InsertData(
+                table: "Device",
+                columns: new[] { "DeviceId", "DeviceName", "Latitude", "Longitude", "StudentNumber" },
+                values: new object[] { new Guid("750de99f-c0d1-458e-8d26-ff4237bcdfd2"), "test", 52.0, 5.0, "bla" });
 
             migrationBuilder.InsertData(
                 table: "WeatherUpdate",
                 columns: new[] { "WeatherUpdateId", "DeviceId", "Humidity", "TemperatureC", "TimeStamp", "Windspeed" },
-                values: new object[] { new Guid("937272a5-3f82-41ec-80af-395d39690be7"), new Guid("1ad80c92-847a-45dd-8397-43f86b417bd9"), 5.0, 5.0, new DateTime(2018, 11, 6, 16, 58, 58, 715, DateTimeKind.Local), 5.0 });
+                values: new object[] { new Guid("a598b97e-162d-4b68-a2a9-4e831d0fc90d"), new Guid("b7886e5a-515f-4c60-b45c-ecf9add01ea6"), 5.0, 10.0, new DateTime(2018, 11, 6, 17, 25, 17, 209, DateTimeKind.Local), 5.0 });
+
+            migrationBuilder.InsertData(
+                table: "WeatherUpdate",
+                columns: new[] { "WeatherUpdateId", "DeviceId", "Humidity", "TemperatureC", "TimeStamp", "Windspeed" },
+                values: new object[] { new Guid("e5fd6bb4-792b-44fc-8966-9e50b663ebe3"), new Guid("750de99f-c0d1-458e-8d26-ff4237bcdfd2"), 5.0, 10.0, new DateTime(2018, 11, 6, 17, 25, 17, 210, DateTimeKind.Local), 5.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_WeatherUpdate_DeviceId",

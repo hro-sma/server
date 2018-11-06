@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace weather.station.server.Migrations
 {
-    public partial class bla : Migration
+    public partial class final : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,6 +43,16 @@ namespace weather.station.server.Migrations
                         principalColumn: "DeviceId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Device",
+                columns: new[] { "DeviceId", "DeviceName", "Latitude", "Longitude", "StudentNumber" },
+                values: new object[] { new Guid("1ad80c92-847a-45dd-8397-43f86b417bd9"), "test", 5.0, 5.0, "hjdcbs" });
+
+            migrationBuilder.InsertData(
+                table: "WeatherUpdate",
+                columns: new[] { "WeatherUpdateId", "DeviceId", "Humidity", "TemperatureC", "TimeStamp", "Windspeed" },
+                values: new object[] { new Guid("937272a5-3f82-41ec-80af-395d39690be7"), new Guid("1ad80c92-847a-45dd-8397-43f86b417bd9"), 5.0, 5.0, new DateTime(2018, 11, 6, 16, 58, 58, 715, DateTimeKind.Local), 5.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_WeatherUpdate_DeviceId",

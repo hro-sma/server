@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using weather.station.server.Models;
 
 namespace weather.station.server.Data
@@ -27,6 +29,32 @@ namespace weather.station.server.Data
             modelBuilder.Entity<WeatherUpdate>()
                 .Property(d => d.DeviceId)
                 .IsRequired();
+
+            var testguid = Guid.NewGuid();
+
+
+            var device = new Device()
+            {
+                DeviceId = testguid,
+                DeviceName = "test",
+                Latitude = 5,
+                Longitude = 5,
+                StudentNumber = "hjdcbs",
+            };
+
+
+            modelBuilder.Entity<Device>().HasData(device);
+            var update = new WeatherUpdate()
+            {
+                DeviceId = testguid,
+                Humidity = 5,
+                TemperatureC = 5,
+                Windspeed = 5,
+                WeatherUpdateId = Guid.NewGuid(),
+                TimeStamp = DateTime.Now
+            };
+
+            modelBuilder.Entity<WeatherUpdate>().HasData(update);
         }
 
         public DbSet<WeatherUpdate> WeatherUpdate { get; set; }

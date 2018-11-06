@@ -9,8 +9,8 @@ using weather.station.server.Data;
 namespace weather.station.server.Migrations
 {
     [DbContext(typeof(WeatherStationServerContext))]
-    [Migration("20181106151216_bla2")]
-    partial class bla2
+    [Migration("20181106155859_final")]
+    partial class final
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,6 +34,10 @@ namespace weather.station.server.Migrations
                     b.HasKey("DeviceId");
 
                     b.ToTable("Device");
+
+                    b.HasData(
+                        new { DeviceId = new Guid("1ad80c92-847a-45dd-8397-43f86b417bd9"), DeviceName = "test", Latitude = 5.0, Longitude = 5.0, StudentNumber = "hjdcbs" }
+                    );
                 });
 
             modelBuilder.Entity("weather.station.server.Models.WeatherUpdate", b =>
@@ -56,6 +60,10 @@ namespace weather.station.server.Migrations
                     b.HasIndex("DeviceId");
 
                     b.ToTable("WeatherUpdate");
+
+                    b.HasData(
+                        new { WeatherUpdateId = new Guid("937272a5-3f82-41ec-80af-395d39690be7"), DeviceId = new Guid("1ad80c92-847a-45dd-8397-43f86b417bd9"), Humidity = 5.0, TemperatureC = 5.0, TimeStamp = new DateTime(2018, 11, 6, 16, 58, 58, 715, DateTimeKind.Local), Windspeed = 5.0 }
+                    );
                 });
 
             modelBuilder.Entity("weather.station.server.Models.WeatherUpdate", b =>

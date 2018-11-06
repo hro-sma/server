@@ -37,8 +37,8 @@ namespace weather.station.server.Data
             {
                 DeviceId = testguid,
                 DeviceName = "test",
-                Latitude = 5,
-                Longitude = 5,
+                Latitude = 52,
+                Longitude = 4.5,
                 StudentNumber = "hjdcbs",
             };
 
@@ -48,13 +48,40 @@ namespace weather.station.server.Data
             {
                 DeviceId = testguid,
                 Humidity = 5,
-                TemperatureC = 5,
+                TemperatureC = 10,
                 Windspeed = 5,
                 WeatherUpdateId = Guid.NewGuid(),
                 TimeStamp = DateTime.Now
             };
 
             modelBuilder.Entity<WeatherUpdate>().HasData(update);
+
+
+            var testguid2 = Guid.NewGuid();
+
+
+            var device2 = new Device()
+            {
+                DeviceId = testguid2,
+                DeviceName = "test",
+                Latitude = 52,
+                Longitude = 5,
+                StudentNumber = "bla",
+            };
+
+
+            modelBuilder.Entity<Device>().HasData(device2);
+            var update2 = new WeatherUpdate()
+            {
+                DeviceId = testguid2,
+                Humidity = 5,
+                TemperatureC = 10,
+                Windspeed = 5,
+                WeatherUpdateId = Guid.NewGuid(),
+                TimeStamp = DateTime.Now
+            };
+
+            modelBuilder.Entity<WeatherUpdate>().HasData(update2);
         }
 
         public DbSet<WeatherUpdate> WeatherUpdate { get; set; }

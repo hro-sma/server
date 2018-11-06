@@ -4,17 +4,17 @@
 
 @model WeatherUpdateViewModel
 
-<h1>Smart things weerstation server.</h1>
-<div class="alert alert-info">Deze website is op dit moment nog onder constructie. Meld fouten op <a href="https://github.com/hro-sma/weather-station-server">onze Github</a> </div>
 
-<div id="weathermap">
-    weerkaart komt hier.
-</div>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet' />
+    <h1>Smart things weerstation server.</h1>
+    <div class="alert alert-info">Deze website is op dit moment nog onder constructie. Meld fouten op <a href="https://github.com/hro-sma/weather-station-server">onze Github</a> </div>
 
-@Model.LatestUpdates
+    <div id="weathermap">
+        <div id='map'></div>
+    </div>
 
 
-<script>
+    <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoiaDQwOTk5NzkiLCJhIjoiY2pueDVybHk1MG56YjNwcnpjcjc2cThhaCJ9.DDkVVzYzBw-1SA2o6hkXug';
 
     var updates = @Model.LatestUpdates;
@@ -52,4 +52,7 @@
             </text>
         }
     }
-</script>
+    </script>
+
+
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>

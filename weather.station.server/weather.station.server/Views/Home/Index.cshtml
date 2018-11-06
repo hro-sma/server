@@ -1,6 +1,8 @@
-@*@{*@
-@*    ViewData["latestPerId"];*@
-@*}*@
+@{
+    ViewData["Title"] = "HRO-SMA";
+}
+
+@model WeatherUpdateViewModel
 
 <h1>Smart things weerstation server.</h1>
 <div class="alert alert-info">Deze website is op dit moment nog onder constructie. Meld fouten op <a href="https://github.com/hro-sma/weather-station-server">onze Github</a> </div>
@@ -8,3 +10,39 @@
 <div id="weathermap">
     weerkaart komt hier.
 </div>
+
+@Model.LatestUpdates
+
+
+
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiaDQwOTk5NzkiLCJhIjoiY2pueDVybHk1MG56YjNwcnpjcjc2cThhaCJ9.DDkVVzYzBw-1SA2o6hkXug';
+
+    function showPosition(position) {
+        var dict = @Model.LatestUpdates;
+     
+        marker.setLngLat([long, lat]);
+ 
+    }
+
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v9',
+        center: [5, 52],
+        zoom: 7
+    });
+
+    var marker = new mapboxgl.Marker({ draggable: true })
+        .setLngLat([long, lat])
+        .addTo(map);
+
+    function onDragEnd() {
+        var lngLat = marker.getLngLat();
+
+        $('#Longitude').val(lngLat.lng);
+        $('#Latitude').val(lngLat.lat);
+    }
+
+    marker.on('dragend', onDragEnd);
+</script>

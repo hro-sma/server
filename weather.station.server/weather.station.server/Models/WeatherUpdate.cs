@@ -13,6 +13,7 @@ namespace weather.station.server.Models
         [Required]
         public Guid DeviceId { get; set; }
         
+        public Device Device { get; set; }
         public DateTime TimeStamp { get; set; }
         public double TemperatureC { get; set; }
         public double Humidity { get; set; }

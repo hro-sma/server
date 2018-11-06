@@ -7,6 +7,6 @@ namespace weather.station.server.Models.ViewModels
 {
     public class WeatherUpdateViewModel
     {
-        public Dictionary<Guid, WeatherUpdate> LatestUpdates { get; set; }
+        public ICollection<WeatherUpdate> LatestUpdates { get; set; }
     }
 }

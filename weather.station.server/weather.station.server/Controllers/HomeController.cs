@@ -22,7 +22,8 @@ namespace weather.station.server.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var latestPerId = new Dictionary<Guid, WeatherUpdate>();
+          
+            ICollection<WeatherUpdate> bla = new List<WeatherUpdate>();
             if (_context.WeatherUpdate.Any())
             {
                 var updates =
@@ -31,15 +32,17 @@ namespace weather.station.server.Controllers
                 
                 foreach (var group in updates)
                 {
-                    var key = group.Key;
+                    
                     var test = group.OrderByDescending(d => d.TimeStamp).First();
-                    latestPerId.Add(key, test);
+                
+                    bla.Add(test);
                 }
             }
 
             var latestUpdatesViewModel = new WeatherUpdateViewModel()
             {
-                LatestUpdates = latestPerId
+                LatestUpdates = bla
+              
             };
 
             //ViewData["latestPerId"] = latestPerId;

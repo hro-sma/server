@@ -1,0 +1,25 @@
+@model DeviceSearchViewModel;
+@{
+    ViewData["Title"] = "Zoek device";
+}
+
+<div class="alert alert-info">
+    Deze website is op dit moment nog onder constructie. Meld fouten op <a href="https://github.com/hro-sma/weather-station-server">onze Github</a>
+</div>
+
+<h1>Zoek een device:</h1>
+
+<p>Voer een <strong>deviceId</strong> zoals <code>d43a0273-36ff-46ff-a3e8-0b9d89ec0cf2</code> in.</p>
+
+<p>@Model?.ErrorMessage</p>
+
+<form asp-controller="dashboard" asp-action="search" method="post">
+    <div class="form-group">
+        <input asp-for="DeviceId" class="form-control" autofocus placeholder="Device id"/>
+        <span asp-validation-for="DeviceId" class="text-danger"></span>
+    </div>
+        <div class="form-group">
+            <input type="submit" value="Zoek" class="btn btn-primary"/>
+        </div>
+    @Html.AntiForgeryToken()
+</form>

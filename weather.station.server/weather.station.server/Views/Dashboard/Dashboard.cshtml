@@ -1,0 +1,156 @@
+@model DeviceDashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard - " + Model.Device.DeviceName;
+
+    var xtimeStamps = Newtonsoft.Json.JsonConvert.SerializeObject(Model.RecentUpdates.Select(x => x.TimeStamp.ToLocalTime().ToShortDateString() + " " + x.TimeStamp.ToLocalTime().ToShortTimeString()).ToList());
+    var xtemperatures = Newtonsoft.Json.JsonConvert.SerializeObject(Model.RecentUpdates.Select(x => x.TemperatureC).ToList());
+    var xhumidity = Newtonsoft.Json.JsonConvert.SerializeObject(Model.RecentUpdates.Select(x => x.Humidity).ToList());
+    var xwindspeed = Newtonsoft.Json.JsonConvert.SerializeObject(Model.RecentUpdates.Select(x => x.Windspeed).ToList());
+}
+
+<div class="alert alert-info">
+    Deze website is op dit moment nog onder constructie. Meld fouten op <a href="https://github.com/hro-sma/weather-station-server">onze Github</a>
+</div>
+
+<h1>Dashboard van: @Model.Device.DeviceName</h1>
+
+<h4 class="text-muted">Laatste update: 
+    @if (Model.LastUpdate != null)
+    {
+        @Model.LastUpdate.TimeStamp.ToLocalTime().ToLongDateString()
+        <text> </text>
+        @Model.LastUpdate.TimeStamp.ToLocalTime().ToLongTimeString()
+    }
+    else
+    {
+        <text>nooit</text>
+    }
+</h4>
+
+<div class="chart-container">
+    <canvas id="temperatureChart" style="width: 100%; height: 200px"></canvas>
+</div>
+<div class="chart-container">
+    <canvas id="humidityChart" style="width: 100%; height: 200px"></canvas>
+</div>
+<div class="chart-container">
+    <canvas id="windspeedChart" style="width: 100%; height: 200px"></canvas>
+</div>
+
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+
+            var temperatureChartName = "temperatureChart";
+            var humidityChartName = "humidityChart";
+            var windspeedChartName = "windspeedChart";
+
+            var temperatureCanvas = document.getElementById(temperatureChartName).getContext('2d');
+            var humidityCanvas = document.getElementById(humidityChartName).getContext('2d');
+            var windspeedCanvas = document.getElementById(windspeedChartName).getContext('2d');
+
+            var temperatureData = {
+                labels: @Html.Raw(xtimeStamps),
+
+                datasets: [
+                    {
+                        label: 'Temperatuur (\u{00B0}C)',
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)'
+                        ],
+                        borderWidth: 1,
+                        data: @Html.Raw(xtemperatures)
+                    }
+                ]
+            };
+            var humidityData = {
+                labels: @Html.Raw(xtimeStamps),
+
+                datasets: [
+                    {
+                        label: "Luchtvochtigheid (%)",
+                        backgroundColor: [
+                            'rgba(0, 99, 132, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(0,99,132,1)'
+                        ],
+                        borderWidth: 1,
+                        data: @Html.Raw(xhumidity)
+                    }
+                ]
+            };
+            var windspeedData = {
+                labels: @Html.Raw(xtimeStamps),
+
+                datasets: [
+                    {
+                        label: "Windsnelheid (km/h)",
+                        backgroundColor: [
+                            'rgba(255, 0, 132, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255,0,132,1)'
+                        ],
+                        borderWidth: 1,
+                        data: @Html.Raw(xwindspeed)
+                    }
+                ]
+            };
+
+
+            var options = {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                min: 0,
+                                beginAtZero: true
+                            },
+                            gridLines: {
+                                display: true,
+                                color: "rgba(255,99,164,0.2)"
+                            }
+                        }
+                    ],
+                    xAxes: [
+                        {
+                            ticks: {
+                                min: 0,
+                                beginAtZero: true
+                            },
+                            gridLines: {
+                                display: false
+                            }
+                        }
+                    ]
+                }
+            };
+
+            var temperatureChart = new Chart(temperatureCanvas,
+                {
+                    options: options,
+                    data: temperatureData,
+                    type: 'line'
+                });
+            var humidityChart = new Chart(humidityCanvas,
+                {
+                    options: options,
+                    data: humidityData,
+                    type: 'line'
+                });
+            var windspeedChart = new Chart(windspeedCanvas,
+                {
+                    options: options,
+                    data: windspeedData,
+                    type: 'line'
+                });
+        });
+    </script>
+}

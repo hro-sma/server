@@ -7,7 +7,6 @@ namespace weather.station.server.Models.ViewModels
 {
     public class DateSelectionViewModel
     {
-
         public long? FromDate { get; set; }
         public long? ToDate { get; set; }
     }

@@ -19,7 +19,6 @@ namespace weather.station.server.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            // ViewData["Page"] = "HomePages/View";
             return View();
         }
 
@@ -37,7 +36,7 @@ namespace weather.station.server.Controllers
             if (!this.ModelState.IsValid)
             {
                 return BadRequest();
-			}
+            }
 
             Device device = new Device
             {

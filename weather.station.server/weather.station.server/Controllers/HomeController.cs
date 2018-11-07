@@ -20,21 +20,21 @@ namespace weather.station.server.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(DateTime dateTime = DateTime.now)
         {
-          
+
             ICollection<WeatherUpdate> bla = new List<WeatherUpdate>();
             if (_context.WeatherUpdate.Any())
             {
                 var updates =
                     _context.WeatherUpdate.Include(d => d.Device).GroupBy(i => i.DeviceId); //get updates with the devices
-            
+
                 
                 foreach (var group in updates)
                 {
-                    
-                    var test = group.OrderByDescending(d => d.TimeStamp).First();
-                
+
+                    var test = group.OrderByDescending(d => d.TimeStamp).where(d => d.TimeStamp < dateTime).First();
+
                     bla.Add(test);
                 }
             }
@@ -42,7 +42,7 @@ namespace weather.station.server.Controllers
             var latestUpdatesViewModel = new WeatherUpdateViewModel()
             {
                 LatestUpdates = bla
-              
+
             };
 
             //ViewData["latestPerId"] = latestPerId;

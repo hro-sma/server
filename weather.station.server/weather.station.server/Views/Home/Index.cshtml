@@ -13,54 +13,29 @@
 
 
 @section Scripts {
-
+    <!--API's-->
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
-    <script>
-        mapboxgl.accessToken =
-            'pk.eyJ1IjoiaDQwOTk5NzkiLCJhIjoiY2pueDVybHk1MG56YjNwcnpjcjc2cThhaCJ9.DDkVVzYzBw-1SA2o6hkXug';
-
-        var map = new mapboxgl.Map({
-            container: 'map2',
-            style: 'mapbox://styles/mapbox/streets-v9',
-            center: [5, 52],
-            zoom: 7
-        });
-
-    </script>
-    
+    <!--Custom scripts-->
+    <script src="~/js/weatherstationmap.js"></script>
+    <!--Custom scripts with razor code-->
     @{
-        foreach (var test in Model.LatestUpdates)
+        foreach (var latestUpdate in Model.LatestUpdates)
         {
             <script>
 
-                // create the popup
                 var popup = new mapboxgl.Popup({ offset: 25 })
-                    .setText("@test.Device.DeviceName" +
+                    .setText("@latestUpdate.Device.DeviceName" +
                         " " +
-                        @test.TemperatureC +
+                        @latestUpdate.TemperatureC +
                         " " +
-                        @test.Windspeed +
+                        @latestUpdate.Windspeed +
                         " " +
-                        @test.Humidity +
+                        @latestUpdate.Humidity +
                         " " +
-                        @test.Windspeed);
-
-
-                geocoder.mapboxClient
-                    .geocodeReverse({
-                        latitude: @test.Device.Latitude, 
-                        longitude: @test.Device.Longitude
-                    }, function(err, res) {
-                        console.log(err, res)
-                    });
-//
-//                new mapboxgl.Marker()
-//                    .setLngLat([@test.Device.Longitude, @test.Device.Latitude])
-//                    .setPopup(popup) // sets a popup on this marker
-//                    .addTo(map);
+                        @latestUpdate.Windspeed);
 
                 var marker = new mapboxgl.Marker()
-                    .setLngLat([@test.Device.Longitude, @test.Device.Latitude])
+                    .setLngLat([@latestUpdate.Device.Longitude, @latestUpdate.Device.Latitude])
                     .setPopup(popup) // sets a popup on this marker
                     .addTo(map);
 

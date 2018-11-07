@@ -47,22 +47,22 @@ namespace weather.station.server.Migrations
             migrationBuilder.InsertData(
                 table: "Device",
                 columns: new[] { "DeviceId", "DeviceName", "Latitude", "Longitude", "StudentNumber" },
-                values: new object[] { new Guid("b7886e5a-515f-4c60-b45c-ecf9add01ea6"), "test", 52.0, 4.5, "hjdcbs" });
+                values: new object[] { new Guid("0cd895f4-6713-41ab-b7dc-3229bacf30a9"), "test", 52.0, 4.5, "hjdcbs" });
 
             migrationBuilder.InsertData(
                 table: "Device",
                 columns: new[] { "DeviceId", "DeviceName", "Latitude", "Longitude", "StudentNumber" },
-                values: new object[] { new Guid("750de99f-c0d1-458e-8d26-ff4237bcdfd2"), "test", 52.0, 5.0, "bla" });
+                values: new object[] { new Guid("b569148b-19ff-4fa9-9c8b-2d8d41223704"), "test", 52.0, 5.0, "bla" });
 
             migrationBuilder.InsertData(
                 table: "WeatherUpdate",
                 columns: new[] { "WeatherUpdateId", "DeviceId", "Humidity", "TemperatureC", "TimeStamp", "Windspeed" },
-                values: new object[] { new Guid("a598b97e-162d-4b68-a2a9-4e831d0fc90d"), new Guid("b7886e5a-515f-4c60-b45c-ecf9add01ea6"), 5.0, 10.0, new DateTime(2018, 11, 6, 17, 25, 17, 209, DateTimeKind.Local), 5.0 });
+                values: new object[] { new Guid("038ae1f2-18df-41a4-9e57-03450a0dab7d"), new Guid("0cd895f4-6713-41ab-b7dc-3229bacf30a9"), 5.0, 10.0, new DateTime(2018, 11, 7, 19, 44, 51, 801, DateTimeKind.Local), 5.0 });
 
             migrationBuilder.InsertData(
                 table: "WeatherUpdate",
                 columns: new[] { "WeatherUpdateId", "DeviceId", "Humidity", "TemperatureC", "TimeStamp", "Windspeed" },
-                values: new object[] { new Guid("e5fd6bb4-792b-44fc-8966-9e50b663ebe3"), new Guid("750de99f-c0d1-458e-8d26-ff4237bcdfd2"), 5.0, 10.0, new DateTime(2018, 11, 6, 17, 25, 17, 210, DateTimeKind.Local), 5.0 });
+                values: new object[] { new Guid("d7dff818-22a2-418e-a696-8875748afe98"), new Guid("b569148b-19ff-4fa9-9c8b-2d8d41223704"), 5.0, 10.0, new DateTime(2018, 11, 7, 19, 44, 51, 804, DateTimeKind.Local), 5.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_WeatherUpdate_DeviceId",

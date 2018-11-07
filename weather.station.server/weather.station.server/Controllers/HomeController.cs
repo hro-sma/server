@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using weather.station.server.Data;
@@ -20,32 +19,27 @@ namespace weather.station.server.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(DateTime dateTime = DateTime.now)
+        public IActionResult Index(DateTime? sliderTime)
         {
+            var time = sliderTime ?? DateTime.Now; //if date time is null, datetime is now
 
-            ICollection<WeatherUpdate> bla = new List<WeatherUpdate>();
+            ICollection<WeatherUpdate> weatherUpdates = new List<WeatherUpdate>();
+
             if (_context.WeatherUpdate.Any())
             {
-                var updates =
-                    _context.WeatherUpdate.Include(d => d.Device).GroupBy(i => i.DeviceId); //get updates with the devices
+                var updates = _context.WeatherUpdate
+                    .Include(d => d.Device)
+                    .GroupBy(i => i.DeviceId);
 
-                
-                foreach (var group in updates)
-                {
-
-                    var test = group.OrderByDescending(d => d.TimeStamp).where(d => d.TimeStamp < dateTime).First();
-
-                    bla.Add(test);
-                }
+                weatherUpdates = updates
+                    .Select(g => g.OrderByDescending(d => d.TimeStamp).First(d => d.TimeStamp < time))
+                    .ToList();
             }
 
-            var latestUpdatesViewModel = new WeatherUpdateViewModel()
+            var latestUpdatesViewModel = new WeatherUpdateViewModel
             {
-                LatestUpdates = bla
-
+                LatestUpdates = weatherUpdates
             };
-
-            //ViewData["latestPerId"] = latestPerId;
 
             return View(latestUpdatesViewModel);
         }

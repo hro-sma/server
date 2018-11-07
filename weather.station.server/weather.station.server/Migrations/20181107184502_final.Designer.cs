@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using weather.station.server.Data;
@@ -9,14 +10,16 @@ using weather.station.server.Data;
 namespace weather.station.server.Migrations
 {
     [DbContext(typeof(WeatherStationServerContext))]
-    [Migration("20181106162517_final")]
+    [Migration("20181107184502_final")]
     partial class final
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799");
+                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("weather.station.server.Models.Device", b =>
                 {
@@ -36,8 +39,8 @@ namespace weather.station.server.Migrations
                     b.ToTable("Device");
 
                     b.HasData(
-                        new { DeviceId = new Guid("b7886e5a-515f-4c60-b45c-ecf9add01ea6"), DeviceName = "test", Latitude = 52.0, Longitude = 4.5, StudentNumber = "hjdcbs" },
-                        new { DeviceId = new Guid("750de99f-c0d1-458e-8d26-ff4237bcdfd2"), DeviceName = "test", Latitude = 52.0, Longitude = 5.0, StudentNumber = "bla" }
+                        new { DeviceId = new Guid("0cd895f4-6713-41ab-b7dc-3229bacf30a9"), DeviceName = "test", Latitude = 52.0, Longitude = 4.5, StudentNumber = "hjdcbs" },
+                        new { DeviceId = new Guid("b569148b-19ff-4fa9-9c8b-2d8d41223704"), DeviceName = "test", Latitude = 52.0, Longitude = 5.0, StudentNumber = "bla" }
                     );
                 });
 
@@ -63,8 +66,8 @@ namespace weather.station.server.Migrations
                     b.ToTable("WeatherUpdate");
 
                     b.HasData(
-                        new { WeatherUpdateId = new Guid("a598b97e-162d-4b68-a2a9-4e831d0fc90d"), DeviceId = new Guid("b7886e5a-515f-4c60-b45c-ecf9add01ea6"), Humidity = 5.0, TemperatureC = 10.0, TimeStamp = new DateTime(2018, 11, 6, 17, 25, 17, 209, DateTimeKind.Local), Windspeed = 5.0 },
-                        new { WeatherUpdateId = new Guid("e5fd6bb4-792b-44fc-8966-9e50b663ebe3"), DeviceId = new Guid("750de99f-c0d1-458e-8d26-ff4237bcdfd2"), Humidity = 5.0, TemperatureC = 10.0, TimeStamp = new DateTime(2018, 11, 6, 17, 25, 17, 210, DateTimeKind.Local), Windspeed = 5.0 }
+                        new { WeatherUpdateId = new Guid("038ae1f2-18df-41a4-9e57-03450a0dab7d"), DeviceId = new Guid("0cd895f4-6713-41ab-b7dc-3229bacf30a9"), Humidity = 5.0, TemperatureC = 10.0, TimeStamp = new DateTime(2018, 11, 7, 19, 44, 51, 801, DateTimeKind.Local), Windspeed = 5.0 },
+                        new { WeatherUpdateId = new Guid("d7dff818-22a2-418e-a696-8875748afe98"), DeviceId = new Guid("b569148b-19ff-4fa9-9c8b-2d8d41223704"), Humidity = 5.0, TemperatureC = 10.0, TimeStamp = new DateTime(2018, 11, 7, 19, 44, 51, 804, DateTimeKind.Local), Windspeed = 5.0 }
                     );
                 });
 

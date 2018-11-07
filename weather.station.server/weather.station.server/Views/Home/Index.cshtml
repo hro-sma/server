@@ -11,6 +11,7 @@
 
 <div id='map2'></div>
 
+<style></style>
 
 @section Scripts {
     <!--API's-->
@@ -22,17 +23,10 @@
         foreach (var latestUpdate in Model.LatestUpdates)
         {
             <script>
-
+                var text =
+                    "<strong>@latestUpdate.Device.DeviceName</strong><p>Temperatuur: @latestUpdate.TemperatureC C <br>Windsnelheid: @latestUpdate.Windspeed KMH <br>Luchtvochtigheid: @latestUpdate.Humidity %";
                 var popup = new mapboxgl.Popup({ offset: 25 })
-                    .setText("@latestUpdate.Device.DeviceName" +
-                        " " +
-                        @latestUpdate.TemperatureC +
-                        " " +
-                        @latestUpdate.Windspeed +
-                        " " +
-                        @latestUpdate.Humidity +
-                        " " +
-                        @latestUpdate.Windspeed);
+                    .setHTML(text);
 
                 var marker = new mapboxgl.Marker()
                     .setLngLat([@latestUpdate.Device.Longitude, @latestUpdate.Device.Latitude])

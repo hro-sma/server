@@ -53,7 +53,7 @@ namespace weather.station.server.Controllers
                 .Where(r => r.DeviceId == deviceId && r.TimeStamp < toDate)
                 .OrderByDescending(r => r.TimeStamp)
                 .Take(20) //Only take 20 max.
-                .ToList();
+                .OrderBy(r => r.TimeStamp).ToList(); // order back for chartjs
 
             var mostRecentUpdate = _context.WeatherUpdate.AsNoTracking().Where(r => r.DeviceId == deviceId)
                 .OrderByDescending(r => r.TimeStamp).FirstOrDefault();

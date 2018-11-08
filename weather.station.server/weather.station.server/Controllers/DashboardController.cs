@@ -51,12 +51,12 @@ namespace weather.station.server.Controllers
 
             var updatesForDevice = _context.WeatherUpdate.AsNoTracking()
                 .Where(r => r.DeviceId == deviceId && r.TimeStamp < toDate)
-                .OrderBy(r => r.TimeStamp)
+                .OrderByDescending(r => r.TimeStamp)
                 .Take(20) //Only take 20 max.
                 .ToList();
 
             var mostRecentUpdate = _context.WeatherUpdate.AsNoTracking().Where(r => r.DeviceId == deviceId)
-                .OrderBy(r => r.TimeStamp).FirstOrDefault();
+                .OrderByDescending(r => r.TimeStamp).FirstOrDefault();
 
             //Construct viewmodel
             var dashboardViewModel = new DeviceDashboardViewModel

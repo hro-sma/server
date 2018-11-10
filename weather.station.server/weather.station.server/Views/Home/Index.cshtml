@@ -8,10 +8,7 @@
 <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet'/>
 <h1>Smart things weerstation server.</h1>
 <div class="alert alert-info">Deze website is op dit moment nog onder constructie. Meld fouten op <a href="https://github.com/hro-sma/weather-station-server">onze Github</a> </div>
-
 <div id='map2'></div>
-
-<style></style>
 
 @section Scripts {
     <!--API's-->
@@ -32,7 +29,7 @@
                     .setLngLat([@latestUpdate.Device.Longitude, @latestUpdate.Device.Latitude])
                     .setPopup(popup) // sets a popup on this marker
                     .addTo(map);
-
+                 
             </script>
         }
     }

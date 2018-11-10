@@ -9,14 +9,32 @@ using weather.station.server.Data;
 namespace weather.station.server.Migrations
 {
     [DbContext(typeof(WeatherStationServerContext))]
-    [Migration("20181029100405_windspeed")]
-    partial class windspeed
+    [Migration("20181107201633_final")]
+    partial class final
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799");
+
+            modelBuilder.Entity("weather.station.server.Models.Device", b =>
+                {
+                    b.Property<Guid>("DeviceId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("DeviceName");
+
+                    b.Property<double>("Latitude");
+
+                    b.Property<double>("Longitude");
+
+                    b.Property<string>("StudentNumber");
+
+                    b.HasKey("DeviceId");
+
+                    b.ToTable("Device");
+                });
 
             modelBuilder.Entity("weather.station.server.Models.WeatherUpdate", b =>
                 {
@@ -35,7 +53,17 @@ namespace weather.station.server.Migrations
 
                     b.HasKey("WeatherUpdateId");
 
+                    b.HasIndex("DeviceId");
+
                     b.ToTable("WeatherUpdate");
+                });
+
+            modelBuilder.Entity("weather.station.server.Models.WeatherUpdate", b =>
+                {
+                    b.HasOne("weather.station.server.Models.Device", "Device")
+                        .WithMany("WeatherUpdates")
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

@@ -2,9 +2,35 @@
     ViewData["Title"] = "HRO-SMA";
 }
 
+@model WeatherUpdateViewModel
+
+
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet'/>
 <h1>Smart things weerstation server.</h1>
 <div class="alert alert-info">Deze website is op dit moment nog onder constructie. Meld fouten op <a href="https://github.com/hro-sma/weather-station-server">onze Github</a> </div>
+<div id='map2'></div>
 
-<div id="weathermap">
-    weerkaart komt hier.
-</div>
+@section Scripts {
+    <!--API's-->
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
+    <!--Custom scripts-->
+    <script src="~/js/weatherstationmap.js"></script>
+    <!--Custom scripts with razor code-->
+    @{
+        foreach (var latestUpdate in Model.LatestUpdates)
+        {
+            <script>
+                var text =
+                    "<strong>@latestUpdate.Device.DeviceName</strong><p>Temperatuur: @latestUpdate.TemperatureC C <br>Windsnelheid: @latestUpdate.Windspeed KMH <br>Luchtvochtigheid: @latestUpdate.Humidity %";
+                var popup = new mapboxgl.Popup({ offset: 25 })
+                    .setHTML(text);
+
+                var marker = new mapboxgl.Marker()
+                    .setLngLat([@latestUpdate.Device.Longitude, @latestUpdate.Device.Latitude])
+                    .setPopup(popup) // sets a popup on this marker
+                    .addTo(map);
+                 
+            </script>
+        }
+    }
+}

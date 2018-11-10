@@ -21,7 +21,7 @@
         {
             <script>
                 var text =
-                    "<strong>@latestUpdate.Device.DeviceName</strong><p>Temperatuur: @latestUpdate.TemperatureC C <br>Windsnelheid: @latestUpdate.Windspeed KMH <br>Luchtvochtigheid: @latestUpdate.Humidity %";
+                    "<strong>@latestUpdate.Device.DeviceName</strong><p>Temperatuur: @latestUpdate.TemperatureC C <br>Windsnelheid: @latestUpdate.Windspeed KMH <br>Luchtvochtigheid: @latestUpdate.Humidity %<br /><a href='/dashboard/@latestUpdate.Device.DeviceId'>Open dashboard</a>";
                 var popup = new mapboxgl.Popup({ offset: 25 })
                     .setHTML(text);
 

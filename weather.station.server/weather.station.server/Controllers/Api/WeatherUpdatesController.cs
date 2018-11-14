@@ -148,6 +148,9 @@ namespace weather.station.server.Controllers.Api
 
             weatherUpdate.TimeStamp = DateTime.UtcNow;
             weatherUpdate.WeatherUpdateId = Guid.NewGuid();
+            weatherUpdate.Humidity = double.IsNaN(weatherUpdate.Humidity) ? 0 : weatherUpdate.Humidity;
+            weatherUpdate.TemperatureC = double.IsNaN(weatherUpdate.TemperatureC) ? 0 : weatherUpdate.TemperatureC;
+            weatherUpdate.Windspeed = double.IsNaN(weatherUpdate.Windspeed) ? 0 : weatherUpdate.Windspeed;
 
             _context.WeatherUpdate.Add(weatherUpdate);
             await _context.SaveChangesAsync();
